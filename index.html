@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookVerse - Your Personal Library</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+ <header>
+    <nav class="navbar">
+        <div class="container nav-container">
+            <h1 class="logo"><a href="index.html">BookVerse</a></h1>
+              <div class="container">
+       <div class="search-container">
+    <input type="text" id="searchInput" placeholder="Search books, authors, or topics..." autocomplete="off">
+    <button id="searchBtn">Search</button>
+</div>
+    </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link active">Home</a></li>
+                <li><a href="about.html" class="nav-link">About Us</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+  
+
+    <div id="loading" style="display: none;">Loading books...</div>
+    <div id="results"></div>
+
+    <!-- Book Details Modal -->
+    <div id="bookModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-body">
+                <div class="modal-cover">
+                    <img id="modalCover" src="" alt="Book cover">
+                    <div id="noCoverModal" class="no-cover">Book</div>
+                </div>
+                <div class="modal-info">
+                    <h2 id="modalTitle">Book Title</h2>
+                    <p id="modalAuthor" class="author"></p>
+                    <p id="modalYear"></p>
+                    <p id="modalPublisher"></p>
+                    <p id="modalPages"></p>
+                    <p id="modalISBN"></p>
+                    <div id="modalSubjects" class="subjects"></div>
+                    <hr>
+                    <h3>Description</h3>
+                    <p id="modalDescription">Loading description...</p>
+                    <div class="modal-actions">
+                        <a id="readLink" href="#" target="_blank" class="read-btn">Read Online</a>
+                        <a id="olLink" href="#" target="_blank" class="ol-btn">View on Open Library</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Powered by Open Library API • Your Personal Book Library</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
