@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Cart</title>
+  <link rel="stylesheet" href="main.css">
+  <link rel="icon" type="image/png" href="cart.png">
+
+</head>
+<body>
+  <header>
+    <h1>Shopping Cart</h1>
+    <a href="index.html">← Back to BookVerse</a>
+  </header>
+
+  <main>
+   
+
+<div id="cartItems"></div>
+
+<div id="cartSummary">
+  <p>Total: $<span id="cartTotal">0</span></p>
+  <button id="buyNowBtn">Buy Now</button>
+</div>
+
+<!-- Status messages will appear here -->
+<div id="checkoutStatus"></div>
+
+<!-- Hidden payment form (shown only after Buy Now) -->
+<div id="paymentSection" style="display:none;">
+  <h2>Payment Details</h2>
+  <form id="fakePaymentForm">
+    <label>
+      Card Number:
+      <input type="text" placeholder="1234 5678 9012 3456" required>
+    </label>
+    <label>
+      Expiry Date:
+      <input type="text" placeholder="MM/YY" required>
+    </label>
+    <label>
+      CVV:
+      <input type="text" placeholder="123" required>
+    </label>
+    <button type="submit">Pay Now</button>
+  </form>
+</div>
+  </main>
+  <script src="cart.js"></script>
+</body>
+</html>
