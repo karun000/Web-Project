@@ -1,11 +1,15 @@
+// Load cart from localStorage
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
 function renderCart() {
   const cartItemsDiv = document.getElementById('cartItems');
   const cartTotalEl = document.getElementById('cartTotal');
+  const buyBtn = document.getElementById('buyNowBtn');
   cartItemsDiv.innerHTML = '';
 
   let total = 0;
+
+  // If cart is empty
   if (cart.length === 0) {
     cartItemsDiv.innerHTML = `
       <div class="empty-cart">
@@ -14,12 +18,13 @@ function renderCart() {
       </div>
     `;
     cartTotalEl.textContent = '0';
+    if (buyBtn) buyBtn.disabled = true;
     return;
   }
 
+  // Show each item
   cart.forEach(item => {
-    const price = 10; // demo price
-    const itemTotal = price * item.quantity;
+    const itemTotal = item.price * item.quantity;
     total += itemTotal;
 
     const div = document.createElement('div');
@@ -28,13 +33,15 @@ function renderCart() {
       <h3>${item.title}</h3>
       <p>Author: ${item.author}</p>
       <p>Quantity: ${item.quantity}</p>
-      <p>Price: $${itemTotal}</p>
+      <p>Unit Price: $${item.price}</p>
+      <p>Total: $${itemTotal}</p>
       <button class="remove-btn" data-id="${item.id}">Remove</button>
     `;
     cartItemsDiv.appendChild(div);
   });
 
   cartTotalEl.textContent = total;
+  if (buyBtn) buyBtn.disabled = (total <= 0);
 }
 
 // Remove item
@@ -49,7 +56,7 @@ document.addEventListener('click', (e) => {
 
 // Buy Now → show payment form
 document.getElementById('buyNowBtn').onclick = () => {
-  const total = cart.reduce((sum, item) => sum + (item.quantity * 10), 0);
+  const total = cart.reduce((sum, item) => sum + (item.quantity * item.price), 0);
   const statusDiv = document.getElementById('checkoutStatus');
   const paymentSection = document.getElementById('paymentSection');
 
@@ -62,7 +69,6 @@ document.getElementById('buyNowBtn').onclick = () => {
     return;
   }
 
-  // Show payment form
   paymentSection.style.display = 'block';
   statusDiv.innerHTML = `
     <div class="status-card processing">
@@ -71,50 +77,29 @@ document.getElementById('buyNowBtn').onclick = () => {
   `;
 };
 
-const cardInput = document.getElementById('cardNumber');
 
-cardInput.addEventListener('input', (e) => {
-  let value = e.target.value.replace(/\D/g, ''); 
-  value = value.substring(0, 16); // limit to 16 digits
 
-  
-  let formatted = '';
-  for (let i = 0; i < value.length; i += 4) {
-    if (i > 0) formatted += ' ';
-    formatted += value.substring(i, i + 4);
-  }
-
-  e.target.value = formatted;
-});
-
-// Pay Now → show success message
+// Pay Now → success message
 document.getElementById('fakePaymentForm').addEventListener('submit', (e) => {
   e.preventDefault();
-  const total = cart.reduce((sum, item) => sum + (item.quantity * 10), 0);
+  const total = cart.reduce((sum, item) => sum + (item.quantity * item.price), 0);
   const statusDiv = document.getElementById('checkoutStatus');
 
   setTimeout(() => {
-  statusDiv.innerHTML = `
-    <div class="status-card success">
-      ✅ Payment successful! You bought items worth $${total}.
-      <br>
-      <button class="continue-btn" onclick="window.location.href='index.html'">
-        Continue Shopping
-      </button>
-    </div>
-  `;
-  cart = [];
-  localStorage.setItem('cart', JSON.stringify(cart));
-  renderCart();
-  document.getElementById('paymentSection').style.display = 'none';
-}, 2000);
-
-  // Clear cart
-  cart = [];
-  localStorage.setItem('cart', JSON.stringify(cart));
-  renderCart();
-
-  // Hide payment form again
-  document.getElementById('paymentSection').style.display = 'none';
+    statusDiv.innerHTML = `
+      <div class="status-card success">
+        ✅ Payment successful! You bought items worth $${total}.
+        <br>
+        <button class="continue-btn" onclick="window.location.href='index.html'">
+          Continue Shopping
+        </button>
+      </div>
+    `;
+    cart = [];
+    localStorage.setItem('cart', JSON.stringify(cart));
+    renderCart();
+    document.getElementById('paymentSection').style.display = 'none';
+  }, 2000);
 });
+
 renderCart();
