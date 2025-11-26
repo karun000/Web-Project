@@ -6,12 +6,27 @@ const resultsDiv = document.getElementById('results');
 const loading = document.getElementById('loading');
 const modal = document.getElementById('bookModal');
 const closeModalBtn = document.querySelector('.close');
-
+let cart = [];
 // Close modal properly (fixes scroll issue!)
 closeModalBtn.onclick = closeModal;
 window.onclick = (e) => {
     if (e.target === modal) closeModal();
 };
+resultsDiv.addEventListener('click', (e) => {
+  const btn = e.target.closest('button');
+  if (!btn) return;
+
+  if (btn.classList.contains('read-more')) {
+    const key = btn.dataset.key;
+    if (key) showBookDetails(key);
+    return;
+  }
+
+  if (btn.classList.contains('add-cart')) {
+    addToCart(btn.dataset.id, btn.dataset.title, btn.dataset.author);
+    return;
+  }
+});
 
 function openModal() {
     modal.style.display = 'block';
@@ -117,6 +132,13 @@ function displayBooks(books) {
                 <p class="book-author">${escapeHtml(book.author_name?.join(', ') || 'Unknown Author')}</p>
                 <p class="book-year">Published: ${book.first_publish_year || 'N/A'}</p>
                 <button class="read-more" data-key="${book.key || ''}">View Details</button>
+                <button class="add-cart"
+          data-id="${book.key}"
+          data-title="${escapeHtml(book.title)}"
+          data-author="${escapeHtml(book.author_name?.join(', ') || 'Unknown Author')}">
+          Add to Cart
+        </button>
+
             </div>
         `;
 
@@ -126,7 +148,99 @@ function displayBooks(books) {
 
         resultsDiv.appendChild(card);
     });
+     //Add to cart
+//     card.innerHTML = `
+//     <div class="book-cover">
+//         ${coverUrl 
+//             ? `<img src="${coverUrl}" loading="lazy" alt="${escapeHtml(book.title)}">`
+//             : '<div class="no-cover">Book</div>'
+//         }
+//     </div>
+//     <div class="book-info">
+//         <h3 class="book-title">${escapeHtml(book.title || 'Unknown Title')}</h3>
+//         <p class="book-author">${escapeHtml(book.author_name?.join(', ') || 'Unknown Author')}</p>
+//         <p class="book-year">Published: ${book.first_publish_year || 'N/A'}</p>
+//         <button class="read-more" data-key="${book.key || ''}">View Details</button>
+//         <button class="add-cart" 
+//             data-id="${book.key}" 
+//             data-title="${escapeHtml(book.title)}"
+//             data-author="${escapeHtml(book.author_name?.join(', ') || 'Unknown Author')}">
+            
+//                 </button>
+//             Add to Cart
+//         </button>
+//     </div>
+// `;
 }
+// CHANGE HERE: single cart source of truth
+cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+function addToCart(id, title, author) {
+  const item = cart.find(b => b.id === id);
+  if (item) {
+    item.quantity++;
+  } else {
+    // assign random price between 10 and 99
+    const price = Math.floor(Math.random() * (99 - 10 + 1)) + 10;
+    cart.push({ id, title, author, quantity: 1, price });
+  }
+  localStorage.setItem('cart', JSON.stringify(cart));
+  updateCartCount();
+
+  alert(`${title} added to cart!`);
+}
+
+
+function updateCartCount() {
+  const el = document.getElementById('cartCount');
+  if (!el) return;
+  el.textContent = cart.reduce((sum, i) => sum + i.quantity, 0);
+}
+
+
+window.addEventListener('load', () => {
+  cart = JSON.parse(localStorage.getItem('cart')) || [];
+  updateCartCount();
+});
+
+// cart.js
+cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+function renderCart() {
+  const cartItemsDiv = document.getElementById('cartItems');
+  const cartTotalEl = document.getElementById('cartTotal');
+  cartItemsDiv.innerHTML = '';
+
+  let total = 0;
+
+  if (cart.length === 0) {
+    cartItemsDiv.innerHTML = '<p>Your cart is empty.</p>';
+    cartTotalEl.textContent = '0';
+    return;
+  }
+
+  cart.forEach(item => {
+    // For demo, assume each book costs $10
+    const price = 10;
+    const itemTotal = price * item.quantity;
+    total += itemTotal;
+
+    const div = document.createElement('div');
+    div.className = 'cart-item';
+    div.innerHTML = `
+      <h3>${item.title}</h3>
+      <p>Author: ${item.author}</p>
+      <p>Quantity: ${item.quantity}</p>
+      <p>Price: $${itemTotal}</p>
+      <button class="remove-btn" data-id="${item.id}">Remove</button>
+    `;
+    cartItemsDiv.appendChild(div);
+  });
+
+  cartTotalEl.textContent = total;
+}
+
+
 
 async function showBookDetails(key) {
     openModal();
