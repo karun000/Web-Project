@@ -267,17 +267,25 @@ h1 {
     margin-bottom: 1rem;
 }
 /* Add to Cart button style */
+.button-row {
+  display: flex;
+  gap: 10px; /* spacing between buttons */
+  margin-top: 10px;
+}
+
+.read-more,
 .add-cart {
   background-color: #ff9800;
   color: white;
   border: none;
   padding: 0.6rem 1rem;
-  margin-top: 0.5rem;
   font-size: 0.95rem;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
+
+
 
 .add-cart:hover {
   background-color: #e68900;
