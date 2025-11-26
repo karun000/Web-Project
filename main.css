@@ -236,6 +236,7 @@ h1 {
     color: var(--dark);
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    line-clamp: 5;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
@@ -260,11 +261,32 @@ h1 {
     line-height: 1.6;
     display: -webkit-box;
     -webkit-line-clamp: 4;
+     line-clamp: 5;
     -webkit-box-orient: vertical;
     overflow: hidden;
     margin-bottom: 1rem;
 }
+/* Add to Cart button style */
+.add-cart {
+  background-color: #ff9800;
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 
+.add-cart:hover {
+  background-color: #e68900;
+}
+
+
+.book-info .add-cart {
+  width: 100%;
+}
 .read-more {
     background: var(--primary);
     color: white;
@@ -294,7 +316,30 @@ footer a {
     color: white;
     text-decoration: underline;
 }
+.cart-item {
+  border: 1px solid #ddd;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background: #f9f9f9;
+}
 
+#cartSummary {
+  margin-top: 2rem;
+  font-size: 1.2rem;
+}
+
+#buyNowBtn {
+  background: #4caf50;
+  color: white;
+  padding: 0.7rem 1.2rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#buyNowBtn:hover {
+  background: #388e3c;
+}
 @media (max-width: 768px) {
     .search-container {
         flex-direction: column;
@@ -314,7 +359,27 @@ footer a {
     }
 }
 
-/* Modal Styles */
+.remove-btn {
+  background-color: #f44336;  
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.remove-btn:hover {
+  background-color: #d32f2f;   
+}
+
+.remove-btn:active {
+  background-color: #b71c1c;   
+}
+
+
 .modal {
     display: none;
     position: fixed;
@@ -350,6 +415,26 @@ footer a {
     transition: 0.3s;
 }
 
+.empty-cart {
+  text-align: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #fceabb, #f8b500);
+  color: #333;
+  font-size: 1.3rem;
+  font-weight: bold;
+  border-radius: 8px;
+  margin: 2rem auto;
+  max-width: 400px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.empty-cart span {
+  display: block;
+  font-size: 1rem;
+  font-weight: normal;
+  margin-top: 0.5rem;
+  color: #555;
+}
 .close:hover {
     color: #000;
 }
@@ -465,4 +550,130 @@ footer a {
 @keyframes slideIn {
     from { transform: translateY(-50px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
+}
+
+.status-card {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.status-card.error {
+  background: #ffebee;
+  color: #c62828;
+  border: 1px solid #c62828;
+}
+
+.status-card.processing {
+  background: #fff3e0;
+  color: #ef6c00;
+  border: 1px solid #ef6c00;
+}
+
+.status-card.success {
+  background: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #2e7d32;
+}
+
+#paymentSection {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: #f1f1f1;
+  border-radius: 8px;
+}
+
+#paymentSection h2 {
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+#fakePaymentForm label {
+  display: block;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+#fakePaymentForm input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.3rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#fakePaymentForm button {
+  background: #2196f3;
+  color: white;
+  padding: 0.7rem 1.2rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#fakePaymentForm button:hover {
+  background: #1976d2;
+}
+
+.note {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #666;
+}
+.status-card {
+  margin: 1rem 0;
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.status-card.error {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.status-card.processing {
+  background: #fff3e0;
+  color: #ef6c00;
+}
+
+#buyNowBtn:disabled {
+  background: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}
+
+.status-card.success {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+#paymentSection {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: #f1f1f1;
+  border-radius: 8px;
+}
+.continue-btn {
+  margin-top: 1rem;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.continue-btn:hover {
+  background-color: #1976d2;
+}
+#cardNumber {
+  font-family: monospace;
+  letter-spacing: 2px;
 }
