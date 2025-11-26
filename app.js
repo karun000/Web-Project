@@ -127,19 +127,22 @@ function displayBooks(books) {
                     : '<div class="no-cover">Book</div>'
                 }
             </div>
-            <div class="book-info">
-                <h3 class="book-title">${escapeHtml(book.title || 'Unknown Title')}</h3>
-                <p class="book-author">${escapeHtml(book.author_name?.join(', ') || 'Unknown Author')}</p>
-                <p class="book-year">Published: ${book.first_publish_year || 'N/A'}</p>
-                <button class="read-more" data-key="${book.key || ''}">View Details</button>
-                <button class="add-cart"
-          data-id="${book.key}"
-          data-title="${escapeHtml(book.title)}"
-          data-author="${escapeHtml(book.author_name?.join(', ') || 'Unknown Author')}">
-          Add to Cart
-        </button>
+<div class="book-info">
+    <h3 class="book-title">${escapeHtml(book.title || 'Unknown Title')}</h3>
+    <p class="book-author">${escapeHtml(book.author_name?.join(', ') || 'Unknown Author')}</p>
+    <p class="book-year">Published: ${book.first_publish_year || 'N/A'}</p>
 
-            </div>
+    <div class="button-row">
+        <button class="read-more" data-key="${book.key || ''}">View Details</button>
+
+        <button class="add-cart"
+            data-id="${book.key}"
+            data-title="${escapeHtml(book.title)}"
+            data-author="${escapeHtml(book.author_name?.join(', ') || 'Unknown Author')}">
+            Add to 🛒
+        </button>
+    </div>
+</div>
         `;
 
         card.querySelector('.read-more').onclick = () => {
